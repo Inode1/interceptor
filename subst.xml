@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PMML version="3.0">
+		<Entity>
+			<Server addr="192.168.56.1" />
+			<Client addr="192.168.56.102" />
+			<Files>
+				<substitution what="/dists/trusty/InRelease" to="file1"/>
+				<substitution what="patch" to="file2"/>
+				<substitution what="keygen" to="file3"/>
+			</Files>
+		</Entity>
+		<Entity>
+			<Server addr="192.168.2.2" />
+			<Client addr="192.168.3.2" />
+			<Files>
+				<substitution what="virus1" to="file1"/>
+				<substitution what="patch1" to="file2"/>
+				<substitution what="keygen1" to="file2"/>
+			</Files>
+		</Entity>
+</PMML>
