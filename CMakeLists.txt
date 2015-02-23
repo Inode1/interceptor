@@ -1,0 +1,16 @@
+cmake_minimum_required (VERSION 2.8)
+project (interceptor)
+find_package(Boost COMPONENTS regex REQUIRED)
+if(NOT Boost_FOUND)
+    message(SEND_ERROR "Failed to find boost::regex.")
+    return()
+else()
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(SOURCE interceptor.cpp ReadConfig.cpp Regular.cpp SocketFunctions.cpp test.cpp Util.cpp xmlParser.cpp)
+set(HEADER ReadConfig.hpp Regular.h SocketFunctions.h test.h Util.h xmlParser.h)
+
+add_executable(interceptor ${SOURCE} ${HEADER})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
