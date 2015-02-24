@@ -36,6 +36,7 @@ void * HttpSubstitution(void * arg)
 	Test server(serverInfo.hSocket);
 
 	extern char pathToConfig[200];
+	cout  << pathToConfig << endl;
 	vector<substitutionCouple> *substitutionList=GetSubstitutionList(pathToConfig,serverInfo.addrSocket.c_str(),clientInfo.addrSocket.c_str());
 
 	fd_set *readset=new fd_set;
