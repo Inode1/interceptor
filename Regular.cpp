@@ -1,11 +1,10 @@
 #include <boost/regex.hpp>
 
 #include "Regular.h"
-#include "ReadConfig.hpp"
+#include <iostream>
 
 using std::string;
 using std::vector;
-
 
 string FindRegular(const char*  buff, const char* regular)
 {
@@ -16,39 +15,24 @@ string FindRegular(const char*  buff, const char* regular)
 	if (boost::regex_search(buffer, results, exp))
 	{
 		//Возвращаем первое нахождение регулярки
-		string foundString = results[0];
+		string foundString = results[1];
 		return foundString;
 	}
 	return string();
 }
 
-
-string GetFileNameFromString(string stringWithFilename)
+string NeedReplace(char *buff,const std::map<string,DataLoad::fullPackageData> &substitutionList)
 {
-	uint pos=stringWithFilename.rfind(' ');
-	if(pos==string::npos) return string();
-	string filename=stringWithFilename.substr(0,pos);
-	pos=filename.rfind('/');
-	if(pos==string::npos) return string();
-	filename=filename.substr(pos+1,filename.size()-pos);
-	return filename;
-}
+	if(FindRegular(buff,"GET (/.*) HTTP").empty() || substitutionList.empty()) return string{};
+	string stringWithFilename(FindRegular(buff,"GET (/.*) HTTP"));
 
-int NeedReplace(char *buff,vector<substitutionCouple> substitutionList)
-{
-	if(FindRegular(buff,"GET /.* HTTP").empty() || substitutionList.empty()) return -1;
-	string stringWithFilename(FindRegular(buff,"GET /.* HTTP"));
-	if(GetFileNameFromString(stringWithFilename).empty()) return -1;
-	string requestedFilename(GetFileNameFromString(stringWithFilename));
-	return FindFilenameInList(requestedFilename,substitutionList);
-}
-
-int FindFilenameInList(string requestedFilename,vector<substitutionCouple> substitutionList)
-{
-	for(uint i=0;i<substitutionList.size();++i)
+	for (const auto a: substitutionList)
 	{
-		if(!FindRegular(requestedFilename.c_str(),substitutionList[i].what).empty())
-			return i;
+	    std::size_t found = stringWithFilename.find(a.first);
+
+	    if (found!=std::string::npos)
+	       return a.first;
 	}
-	return -1;
+	return string{};
 }
+

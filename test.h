@@ -3,7 +3,7 @@
 
 #include <deque>
 
-#include "ReadConfig.hpp"
+#include "data_load.h"
 
 #define BUFFSIZE 1500
 
@@ -26,7 +26,7 @@ public:
 	//Вариант для серверной стороны, когда не надо проверять замену
 	bool ReadData();
 	//Вариант для клиентской стороны, когда надо проверять замену
-	bool ReadData(std::vector<substitutionCouple> substitutionList);
+	bool ReadData(std::map<std::string,DataLoad::fullPackageData> &substitutionList);
 	void SendCollectedDataTo(IDataSender &sender);
 
 private:

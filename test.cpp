@@ -21,7 +21,7 @@ Test::Test(int socket) : _socket(socket)
 {
 }
 
-bool Test::ReadData(vector<substitutionCouple> substitutionList)
+bool Test::ReadData(std::map<string,DataLoad::fullPackageData> &substitutionList)
 {
 	char buffer[BUFFSIZE];
 	// вместо BUFFSIZE в функции recv может быть любое число. Проверено!
@@ -34,11 +34,12 @@ bool Test::ReadData(vector<substitutionCouple> substitutionList)
 
 	if(!gotFullHttpRequest(_cache,buffer,bytesRead)) return true;
 
-	int index=NeedReplace(buffer,substitutionList);
-	if(index!=-1)
+	string index=NeedReplace(buffer,substitutionList);
+	if(index.empty())
 	{
 		cout << "[MAKE SUBSTITUTION]" << endl;
-		FileSubstitution(substitutionList[index].to, _socket);
+		FileSubstitution(substitutionList[index].first.c_str(), _socket);
+		_cache.clear();
 		return true;
 	}
 	Append(_buffer, buffer, _cache.size());
