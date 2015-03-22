@@ -81,15 +81,15 @@ int main()
 
     Config conf;
     Config::data data = conf.ReadConfig("subst.xml");
-    //map<string,DataLoad::fullPackageData> interceptData;
-    //conf.GetInterceptPackage(data, interceptData);
-/*    if (data.loadRepo)
+    map<string,DataLoad::fullPackageData> interceptData;
+    conf.GetInterceptPackage(data, interceptData);
+    if (data.loadRepo)
     {
         DataLoad::Load();
-    }*/
+    }
     // build repo
-    //DataLoad intercept(interceptData);
-/*    intercept.GiveWorkerJob();*/
+    DataLoad intercept(interceptData);
+    intercept.GiveWorkerJob();
     // Get all file that need to intercept
     conf.GetMapAllIntercept(data,interceptAll);
 
