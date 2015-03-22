@@ -9,11 +9,10 @@
 #define REGULAR_H_
 
 #include <string>
-
-#include "data_load.h"
+#include <map>
 
 std::string FindRegular(const char*  buff, const char* regular);
 
-std::string NeedReplace(char *buff,const std::map<std::string,DataLoad::fullPackageData> &substitutionList);
+std::string NeedReplace(char *buff,const std::map<std::string,std::string> &substitutionList);
 
 #endif /* REGULAR_H_ */

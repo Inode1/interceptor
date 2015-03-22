@@ -17,7 +17,7 @@
 #define BUFFSIZE 1500
 #define SERVER_PORT 80
 
-static map<string,DataLoad::fullPackageData> interceptData;
+static std::map<std::string,std::string> interceptAll;
 
 void * HttpSubstitution(void * arg)
 {
@@ -48,24 +48,20 @@ void * HttpSubstitution(void * arg)
 		}
 		if(FD_ISSET(server._socket,readset))
 		{
-			cout << "Server socket readset" << endl;
 		    if(!server.ReadData())
 				break;
 		}
 		if(FD_ISSET(client._socket,writeset))
 		{
-		    cout << "Client socket writeset" << endl;
 		    server.SendCollectedDataTo(client);
 		}
 		if(FD_ISSET(client._socket,readset))
 		{
-		    cout << "Client socket readset" << endl;
-		    if(!client.ReadData(interceptData))
+		    if(!client.ReadData(interceptAll))
 				break;
 		}
 		if(FD_ISSET(server._socket,writeset))
 		{
-		    cout << "Server socket writeset" << endl;
 		    client.SendCollectedDataTo(server);
 		}
 	}
@@ -85,14 +81,17 @@ int main()
 
     Config conf;
     Config::data data = conf.ReadConfig("subst.xml");
-
-    conf.GetInterceptMap(data, interceptData);
-    if (data.loadRepo)
+    //map<string,DataLoad::fullPackageData> interceptData;
+    //conf.GetInterceptPackage(data, interceptData);
+/*    if (data.loadRepo)
     {
         DataLoad::Load();
-    }
-    DataLoad intercept(interceptData);
-    intercept.GiveWorkerJob();
+    }*/
+    // build repo
+    //DataLoad intercept(interceptData);
+/*    intercept.GiveWorkerJob();*/
+    // Get all file that need to intercept
+    conf.GetMapAllIntercept(data,interceptAll);
 
     cout << "__________________________________________________________________________" << endl;
 

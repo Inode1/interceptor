@@ -1,0 +1,19 @@
+<Config>
+    <Entity>
+        <Server addr="192.168.56.101" ></Server>
+        <Client addr="192.168.57.103" ></Client>
+        <Files>
+            <subFile what="trusty-updates/Release" to="/home/ivan/workspace/test_boost/build/ru.archive.ubuntu.com/ubuntu/dists/trusty-updates/Release" ></subFile>
+            <subFile what="trusty-updates/main/binary-amd64/Packages.bz2" to="/home/ivan/workspace/test_boost/build/ru.archive.ubuntu.com/ubuntu/dists/trusty-updates/main/binary-amd64/Packages.bz2" ></subFile>
+            <subFile to="/home/ivan/workspace/test_boost/build/ru.archive.ubuntu.com/ubuntu/dists/trusty-updates/main/binary-i386/Packages.bz2" what="trusty-updates/main/binary-i386/Packages.bz2"></subFile>
+            <subPackage what="account-plugin-aim" to="mc_4.7.0-1ubuntu2_i386.deb"></subPackage>
+        </Files>
+    </Entity>
+    <Entity>
+        <Server addr="213.180.204.183" ></Server>
+        <Client addr="192.168.1.5" ></Client>
+        <Files>
+        </Files>
+    </Entity>
+    <LoadRepo>yes</LoadRepo>
+</Config>

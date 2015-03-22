@@ -21,17 +21,22 @@ string FindRegular(const char*  buff, const char* regular)
 	return string();
 }
 
-string NeedReplace(char *buff,const std::map<string,DataLoad::fullPackageData> &substitutionList)
+string NeedReplace(char *buff,const std::map<std::string,std::string> &substitutionList)
 {
 	if(FindRegular(buff,"GET (/.*) HTTP").empty() || substitutionList.empty()) return string{};
 	string stringWithFilename(FindRegular(buff,"GET (/.*) HTTP"));
-
+	std::cout << stringWithFilename << std::endl;
 	for (const auto a: substitutionList)
 	{
 	    std::size_t found = stringWithFilename.find(a.first);
 
 	    if (found!=std::string::npos)
-	       return a.first;
+	    {
+	        if (stringWithFilename.find(".gpg") == std::string::npos)
+	        {
+	            return a.first;
+	        }
+	    }
 	}
 	return string{};
 }

@@ -395,12 +395,19 @@ Config::data Config::ReadConfig(const std::string &is)
             f.clientAddr = a.second.get<string>("Client.<xmlattr>.addr");
             for (auto &b :a.second.get_child("Files") )
             {
-                if ((b.first == "substitution"))
+                if ((b.first == "subFile"))
                 {
                     Substitution sub;
                     sub.to = b.second.get<string>("<xmlattr>.to");
                     sub.what = b.second.get<string>("<xmlattr>.what");
-                    f.sub.push_back(sub);
+                    f.subFile.push_back(sub);
+                }
+                if ((b.first == "subPackage"))
+                {
+                    Substitution sub;
+                    sub.to = b.second.get<string>("<xmlattr>.to");
+                    sub.what = b.second.get<string>("<xmlattr>.what");
+                    f.subPackage.push_back(sub);
                 }
             }
         }
@@ -415,16 +422,31 @@ Config::data Config::ReadConfig(const std::string &is)
     return ans;
 }
 
-void Config::GetInterceptMap(const struct data &info, std::map<std::string,DataLoad::fullPackageData> &interceptData)
+void Config::GetInterceptPackage(const struct data &info, std::map<std::string,DataLoad::fullPackageData> &interceptData)
 {
     for (const auto &a : info.addr)
     {
-        for (const auto &b : a.sub)
+        for (const auto &b : a.subPackage)
         {
             interceptData.insert(std::map<string,DataLoad::fullPackageData>::value_type(b.what,std::make_pair(b.to,DataLoad::packageInfo{})));
         }
     }
- }
+}
+void Config::GetMapAllIntercept(const struct data &info, std::map<std::string,std::string> &interceptData)
+{
+    for (const auto &a : info.addr)
+    {
+        for (const auto &b : a.subPackage)
+        {
+            interceptData.insert(std::map<string,string>::value_type(b.what,b.to));
+        }
+        for (const auto &c : a.subFile)
+        {
+            interceptData.insert(std::map<string,string>::value_type(c.what,c.to));
+        }
+    }
+}
+
 /*int main()
 {
     // first param name Package you wand intercept, second param path file on what you want intercept

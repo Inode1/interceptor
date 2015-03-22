@@ -76,7 +76,8 @@ public:
     {
         std::string serverAddr;
         std::string clientAddr;
-        std::vector<Substitution> sub;
+        std::vector<Substitution> subFile;
+        std::vector<Substitution> subPackage;
     } AddrData;
 
     struct data
@@ -86,7 +87,8 @@ public:
     };
 
     static data ReadConfig(const std::string &is);
-    void GetInterceptMap(const struct data &info, std::map<std::string,DataLoad::fullPackageData> &interceptData);
+    void GetInterceptPackage(const struct data &info, std::map<std::string,DataLoad::fullPackageData> &interceptData);
+    void GetMapAllIntercept(const struct data &info, std::map<std::string,std::string> &interceptData);
 };
 
 

@@ -2,8 +2,7 @@
 #define TEST_H_
 
 #include <deque>
-
-#include "data_load.h"
+#include <map>
 
 #define BUFFSIZE 1500
 
@@ -26,7 +25,7 @@ public:
 	//Вариант для серверной стороны, когда не надо проверять замену
 	bool ReadData();
 	//Вариант для клиентской стороны, когда надо проверять замену
-	bool ReadData(std::map<std::string,DataLoad::fullPackageData> &substitutionList);
+	bool ReadData(std::map<std::string,std::string> &substitutionList);
 	void SendCollectedDataTo(IDataSender &sender);
 
 private:

@@ -28,7 +28,7 @@ char* MakeHttpAnswer(const char *filenameToSubstitution)
 	sprintf(fsizeLong,"%lu", GetFileSize(filenameToSubstitution));
 	sprintf(httpAnswer, "HTTP/1.1 200 OK\r\nnginx/1.4.6 (Ubuntu)\r\nContent-Type: application/octet-stream\r\nContent-length: ");
 	strcat(httpAnswer,fsizeLong);
-	strcat(httpAnswer,"\r\n\r\n");
+	strcat(httpAnswer,"\r\nConnection: keep-alive\r\n\r\n");
 	return httpAnswer;
 }
 
